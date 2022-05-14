@@ -184,7 +184,7 @@ public abstract class AbstractGridCrud<T> extends AbstractCrud<T> {
   }
 
   protected void updateButtonClicked() {
-    T domainObject = grid.asSingleSelect().getValue();
+    T domainObject = crudFormFactory.getUpdateInstanceSupplier().apply(grid.asSingleSelect().getValue());
     showForm(CrudOperation.UPDATE, domainObject, false, savedMessage, event -> {
       try {
         T updatedObject = updateOperation.perform(domainObject);
@@ -204,7 +204,7 @@ public abstract class AbstractGridCrud<T> extends AbstractCrud<T> {
   }
 
   protected void deleteButtonClicked() {
-    T domainObject = grid.asSingleSelect().getValue();
+    T domainObject = crudFormFactory.getDeleteInstanceSupplier().apply(grid.asSingleSelect().getValue());
     showForm(CrudOperation.DELETE, domainObject, true, deletedMessage, event -> {
       try {
         deleteOperation.perform(domainObject);

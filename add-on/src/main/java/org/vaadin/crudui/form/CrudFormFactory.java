@@ -7,6 +7,7 @@ import com.vaadin.flow.component.HasValueAndElement;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.data.converter.Converter;
 import com.vaadin.flow.function.SerializableConsumer;
+import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializableSupplier;
 import org.vaadin.crudui.crud.CrudOperation;
 
@@ -17,9 +18,17 @@ import java.io.Serializable;
  */
 public interface CrudFormFactory<T> extends Serializable {
 
+    SerializableSupplier<T> getNewInstanceSupplier();
     void setNewInstanceSupplier(SerializableSupplier<T> newInstanceSupplier);
 
-    SerializableSupplier<T> getNewInstanceSupplier();
+    SerializableFunction<T, T> getReadInstanceSupplier();
+    void setReadLazyPropertySupplier(SerializableFunction<T, T> readInstanceSupplier);
+
+    SerializableFunction<T,T> getUpdateInstanceSupplier();
+    void setUpdateLazyPropertySupplier(SerializableFunction<T,T> newInstanceSupplier);
+
+    SerializableFunction<T,T> getDeleteInstanceSupplier();
+    void setDeleteLazyPropertySupplier(SerializableFunction<T,T> newInstanceSupplier);
 
     Component buildNewForm(CrudOperation operation, T domainObject, boolean readOnly, ComponentEventListener<ClickEvent<Button>> cancelButtonClickListener, ComponentEventListener<ClickEvent<Button>> operationButtonClickListener);
 
